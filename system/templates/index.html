@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
+</head>
+<body>
+    <div id="top">
+        <b>VA</b>
+    </div>
+
+    <div class="box" id="Setting">
+        <div class="three"><b>Setting</b></div>
+        <div id="data">Data<br>
+            <select>
+                <option value="4x4" selected>4x4 Grid Network</option>
+                <option value="ing">Ingolstad</option>
+                <option value="gangnam">Gangnam</option>
+            </select>
+        </div>
+        <div id="DRA">Method<br>
+            <select>
+                <option value="PCA">PCA</option>
+                <option value="UMAP" selected>UMAP</option>
+                <option value="TSNE">TSNE</option>
+            </select>
+        </div>
+        <div id="sf">Signal Filter<br>
+            <select id="sig_fil" onchange="addOption()">
+            </select>
+            <div id="selected_sig"></div>
+        </div>
+        <div id="tf">Time Fileter
+            <div id="st">
+                <div id="tf_st">Start
+                    <select id="time-filter-start"></select>
+                </div>
+                <div id="tf_ed">End
+                    <select id="time-filter-end"></select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box" id="Projection">
+        <div class="three"><b>Projection</b></div>
+        <button id="poly_set" onclick=setButtonClickHandler()>Set</button>
+        <button id="poly_remove" onclick=resetButtonClickHandler()>Reset</button>
+        <div id="pro"></div>
+    </div>
+    <div class="box" id="Map">
+        <div class="three"><b>Map</b></div>
+        <div id="shape_map"></div>
+    </div>
+    <div class="box" id="Feature">
+        <div class="three"><b>Feature</b></div>
+        <div id="fea"></div>
+        <div id="feature_set">Current Feature list
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div id="select_list"></div>Removed Feature list
+            <div id="removed_list"></div>
+        </div>
+    </div>
+    <div class="box" id="Simulation">
+        <div class="three"><b>Simulation Result</b></div>
+        <div class="linechart" id='chart1'></div>
+        <div class="linechart" id='chart2'></div>
+        <div class="linechart" id='chart3'></div>
+        <div class="linechart" id='chart4'></div>
+    </div>
+    <div class="box" id="corr">
+        <div class="three"><b>Feature Correlation</b></div>
+        <div id="corr_space"></div>
+    </div>
+    <div class="box" id="set_simulation">
+        <div class="three"><b>Set Simulation</b></div>
+        &nbsp;&nbsp;&nbsp;&nbsp;Target Cluster
+        <div id="target_cluster"></div>
+        &nbsp;&nbsp;&nbsp;&nbsp;Policy
+        <div id="policy">
+            <select>
+                <option value="Ql" selected>Q-learning</option>
+                <option value="PPO">PPO</option>
+                <option value="DQN">DQN</option>
+            </select>
+        </div>
+    </div>
+    
+
+    <script src="static/js/map.js"></script>
+    <script src="static/js/simulation.js"></script>
+    <script src="static/js/setting.js"></script>
+    <script src="static/js/projection.js"></script>
+    <script src="static/js/feature.js"></script>
+</body>
+ </html>

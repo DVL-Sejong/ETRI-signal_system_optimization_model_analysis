@@ -1,0 +1,434 @@
+html, body {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(228, 228, 228);
+}
+
+.box {
+    z-index: 1;
+    border: 1px solid rgb(222, 220, 220);
+    background-color: white;
+    border-radius: 0.2em;
+    box-shadow: 0 0 1px;
+}
+
+.selector {
+    z-index: 2;
+    border: 1px solid rgb(228, 228, 228);
+    background-color: white;
+    border-radius: 0.2em;
+    box-shadow: 0 0 1px;
+}
+
+.select {
+    left: 5px;
+    top: 5px;
+}
+
+select {
+    height: 35px;
+    width: 95%;
+    font-size: 15px;
+    border: 1px solid rgb(222, 220, 220);
+    border-radius: 0.2em;
+    box-shadow: 0 0 1px;
+    margin-top: 2px;
+}
+
+.selected {
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px;
+    margin: 7.5px 0px 0px 10px;
+    height: 20px;
+    width: 80px;
+    font-size: 12px;
+    border: 1px solid rgb(222, 220, 220);
+    border-radius: 0.2em;
+    box-shadow: 0 0 1px;
+    background-color: rgb(222, 220, 220);
+}
+
+.rbtn {
+    z-index: 4;
+    border: none;
+    background-color: transparent; 
+}
+
+/* Div Title start --------------------------------------------------------------------------*/
+.three {
+    height: 40px;
+    width: 100%;
+}
+
+.three b {
+    display: block;
+    font-size: 20px;
+    font-weight: bold 500;
+    letter-spacing: 0;
+    line-height: 1.5em;
+    padding-bottom: 10px;
+    position: relative;
+    padding-left: 5px;
+    text-align: center; /* 왼쪽 정렬 추가 */
+}
+  
+.three b:after {
+    content: "";
+    position: absolute;
+    left: 5%;
+    bottom: 4px;
+    height: 3px;
+    width: 90%;
+    background-color: rgb(222, 220, 220);
+}
+/* Div Title end --------------------------------------------------------------------------*/
+
+/* Div --------------------------------------------------------------------------*/
+#top {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 1600px;
+    height: 30px;
+    z-index: 1;
+    border: 1px solid rgb(222, 220, 220);
+    background-color: white;
+    border-radius: 0.2em;
+    box-shadow: 0 0 1px;
+    font-size: 20px;
+    padding: 0px 5px 0px 5px;
+}
+
+#Setting {
+    position: absolute;
+    top: 40px;
+    left: 5px;
+    width: 440px;
+    height: 360px;
+    z-index: 2;
+}
+
+#Projection {
+    position: absolute;
+    top: 40px;
+    left: 450px;
+    width: 720px;
+    height: 620px;
+    z-index: 2;
+}
+
+#Map {
+    position: absolute;
+    top: 40px;
+    left: 1175px;
+    width: 440px;
+    height: 400px;
+    z-index: 2;
+}
+
+#Feature {
+    position: absolute;
+    top: 405px;
+    left: 5px;
+    width: 440px;
+    height: 700px;
+    z-index: 2;
+}
+
+#Simulation {
+    position: absolute;
+    top: 665px;
+    left: 450px;
+    width: 720px;
+    height: 440px;
+    z-index: 2;
+}
+
+#corr {
+    position: absolute;
+    z-index: 2;
+    top: 445px;
+    left: 1175px;
+    width: 440px;
+    height: 440px;
+}
+
+#set_simulation {
+    position: absolute;
+    z-index: 2;
+    top: 890px;
+    left: 1175px;
+    width: 440px;
+    height: 215px;
+    text-align: left;
+    color: black;
+}
+/* Div --------------------------------------------------------------------------*/
+
+/* Setting --------------------------------------------------------------------------*/
+#data {
+    text-align: left;
+    padding-left: 5%;
+    padding-top: 5px;
+    font-size: 20px;
+    color: black;
+}
+#DRA {
+    text-align: left;
+    padding-left: 5%;
+    padding-top: 5px;
+    font-size: 20px;
+    color: black;
+}
+
+#sf {
+    position: relative;
+    text-align: left;
+    padding-left: 5%;
+    padding-top: 5px;
+    font-size: 20px;
+    color: black;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#sf select {
+    position: absolute;
+    z-index: 3;
+    height: 80px;
+    margin-top: 7px;
+    opacity: 0;
+}
+
+#sf option {
+    color: initial;
+}
+
+#sig_fil {
+    z-index: 2;
+    top: 30px;
+    height: 80px;
+    width: 90%;
+}
+
+#selected_sig {
+    display: flex;
+    flex-wrap: wrap;
+    top: 212px;
+    left: 5%;
+    height: 80px;
+    width: 95%;
+    margin-top: 5px;
+    border: 1px solid rgb(222, 220, 220);
+    background-color: transparent;
+    border-radius: 0.2em;
+    box-shadow: 0 0 1px;
+}
+
+#tf {
+    position: absolute;
+    top: 290px;
+    left: 0px;
+    width: 90%;
+    text-align: left;
+    padding-left: 5%;
+    padding-top: 5px;
+    font-size: 20px;
+    color: black;
+}
+
+#st {
+    display: flex;
+    width: 105%;
+    padding-top: 3px;
+    font-size: 12px;
+    color: black;
+}
+
+#st select {
+    height: 25px;
+    width: 160px;
+    font-size: 15px;
+}
+
+#tf_st {
+    width: 50%;
+}
+
+#time-filter-start {
+    margin-left: 5px;
+}
+
+#tf_ed {
+    left: 55%;
+    width: 50%;
+}
+
+#time-filter-end {
+    left: 50%;
+    margin-left: 5px;
+}
+
+
+/* Setting --------------------------------------------------------------------------*/
+
+/* Projection --------------------------------------------------------------------------*/
+#pro {
+    position: absolute;
+    top: 50px;
+    left: 20px;
+    width: 680px;
+    height: 555px;
+    z-index: 3;
+}
+
+#poly_set {
+    position: absolute;
+    width: 50px;
+    z-index: 4;
+    opacity: 1;
+    margin: 5px;
+}
+
+#poly_remove {
+    position: absolute;
+    top: 65px;
+    z-index: 4;
+    opacity: 1;
+    margin: 5px;
+}
+
+/* Projection --------------------------------------------------------------------------*/
+ 
+/* Map --------------------------------------------------------------------------*/
+#shape_map {
+    position: absolute;
+    top: 50px;
+    left: 10px;
+    width: 420px;
+    height: 340px;
+}
+/* Map --------------------------------------------------------------------------*/
+
+/* Feature --------------------------------------------------------------------------*/
+#fea {
+    position: absolute;
+    top: 35px;
+    left: 10px;
+    width: 420px;
+    height: 540px;
+}
+
+#feature_set {
+    position: absolute;
+    top: 555px;
+    left: 10px;
+    width: 420px;
+    height: 140px;
+    border-top: 4px solid rgb(222, 220, 220);
+    border-top-width: 90%;
+}
+
+#select_list {
+    position: absolute;
+    width: 200px;
+    height: 110px;
+    border: 1px solid rgb(222, 220, 220);
+    background-color: white;
+    border-radius: 0.2em;
+    box-shadow: 0 0 1px;
+    overflow-y: auto;
+}
+
+ul.mylist, ol.mylist {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    max-width: 250px;
+    width: 100%;
+}
+
+ul.mylist li, ol.mylist li {
+    padding: 5px 0px 5px 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #efefef;
+    font-size: 12px;
+}
+
+#removed_list {
+    position: absolute;
+    left: 215px;
+    width: 200px;
+    height: 110px;
+    border: 1px solid rgb(222, 220, 220);
+    background-color: white;
+    border-radius: 0.2em;
+    box-shadow: 0 0 1px;
+    overflow-y: auto;
+}
+
+/* Feature --------------------------------------------------------------------------*/
+
+/* Simulation --------------------------------------------------------------------------*/
+.linechart {
+    width: 360px;
+    height: 200px;
+}
+
+#chart1 {
+    top: 40px;
+}
+
+#chart2 {
+    position: absolute;
+    top: 40px;
+    left: 360px;
+}
+
+#chart3 {
+    position: absolute;
+    top: 240px;
+}
+
+#chart4 {
+    position: absolute;
+    top: 240px;
+    left: 360px;
+}
+
+/* Simulation --------------------------------------------------------------------------*/
+
+/* Corr --------------------------------------------------------------------------*/
+#corr_space {
+    position: absolute;
+    top: 45px;
+    left: 10px;
+    height: 390px;
+    width: 420px;
+}
+/* Corr --------------------------------------------------------------------------*/
+
+/* Set Sim --------------------------------------------------------------------------*/
+#target_cluster{
+    position: relative;
+    left: 5%;
+    height: 70px;
+    width: 90%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px solid rgb(222, 220, 220);
+    background-color: transparent;
+    border-radius: 0.2em;
+    box-shadow: 0 0 1px;
+}
+
+#policy {
+    position: relative;
+    left: 5%;
+    width: 95%
+}
+
+/* Set Sim --------------------------------------------------------------------------*/

@@ -52,7 +52,7 @@ class SumoEnvironment(gym.Env):
         use_gui (bool): Whether to run SUMO simulation with the SUMO GUI
         virtual_display (Optional[Tuple[int,int]]): Resolution of the virtual display for rendering
         begin_time (int): The time step (in seconds) the simulation starts. Default: 0
-        num_seconds (int): Number of simulated seconds on SUMO. The duration in seconds of the simulation. Default: 20000
+        num_seconds (int): Number of simulated seconds on SUMO. The time in seconds the simulation must end. Default: 3600
         max_depart_delay (int): Vehicles are discarded if they could not be inserted after max_depart_delay seconds. Default: -1 (no delay)
         waiting_time_memory (int): Number of seconds to remember the waiting time of a vehicle (see https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getAccumulatedWaitingTime). Default: 1000
         time_to_teleport (int): Time in seconds to teleport a vehicle to the end of the edge if it is stuck. Default: -1 (no teleport)
@@ -82,6 +82,7 @@ class SumoEnvironment(gym.Env):
         self,
         net_file: str,
         route_file: str,
+        output_loc: str,
         out_csv_name: Optional[str] = None,
         use_gui: bool = False,
         virtual_display: Tuple[int, int] = (3200, 1800),
@@ -91,8 +92,8 @@ class SumoEnvironment(gym.Env):
         waiting_time_memory: int = 1000,
         time_to_teleport: int = -1,
         delta_time: int = 5,
-        yellow_time: int = 4,
-        min_green: int = 30,
+        yellow_time: int = 2,
+        min_green: int = 5,
         max_green: int = 50,
         single_agent: bool = False,
         reward_fn: Union[str, Callable, dict] = "diff-waiting-time",
@@ -104,6 +105,7 @@ class SumoEnvironment(gym.Env):
         sumo_warnings: bool = True,
         additional_sumo_cmd: Optional[str] = None,
         render_mode: Optional[str] = None,
+        target_list: list = [],
     ) -> None:
         """Initialize the environment."""
         assert render_mode is None or render_mode in self.metadata["render_modes"], "Invalid render mode."
@@ -114,6 +116,7 @@ class SumoEnvironment(gym.Env):
         self._net = net_file
         self._route = route_file
         self.use_gui = use_gui
+        self.target_list = target_list
         if self.use_gui or self.render_mode is not None:
             self._sumo_binary = sumolib.checkBinary("sumo-gui")
         else:
@@ -122,7 +125,7 @@ class SumoEnvironment(gym.Env):
         assert delta_time > yellow_time, "Time between actions must be at least greater than yellow time."
 
         self.begin_time = begin_time
-        self.sim_max_time = begin_time + num_seconds
+        self.sim_max_time = num_seconds
         self.delta_time = delta_time  # seconds on sumo at each step
         self.max_depart_delay = max_depart_delay  # Max wait time to insert a vehicle
         self.waiting_time_memory = waiting_time_memory  # Number of seconds to remember the waiting time of a vehicle (see https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getAccumulatedWaitingTime)
@@ -138,6 +141,7 @@ class SumoEnvironment(gym.Env):
         self.additional_sumo_cmd = additional_sumo_cmd
         self.add_system_info = add_system_info
         self.add_per_agent_info = add_per_agent_info
+        self.output_loc = output_loc
         self.label = str(SumoEnvironment.CONNECTION_LABEL)
         SumoEnvironment.CONNECTION_LABEL += 1
         self.sumo = None
@@ -149,8 +153,10 @@ class SumoEnvironment(gym.Env):
             traci.start([sumolib.checkBinary("sumo"), "-n", self._net], label="init_connection" + self.label)
             conn = traci.getConnection("init_connection" + self.label)
 
-        
-        self.ts_ids = list(conn.trafficlight.getIDList())
+        if target_list == '':
+            self.ts_ids = list(conn.trafficlight.getIDList())
+        else:
+            self.ts_ids = target_list
         self.observation_class = observation_class
 
         if isinstance(self.reward_fn, dict):
@@ -206,16 +212,10 @@ class SumoEnvironment(gym.Env):
             str(self.waiting_time_memory),
             "--time-to-teleport",
             str(self.time_to_teleport),
-            "--device.rerouting.probability",
-            "1",
-            "--device.rerouting.adaptation-steps",
-            "18",
-            "--device.rerouting.adaptation-interval",
-            "10",
-            "--device.rerouting.period",
-            "180",
+            "--statistic-output",
+            "outputs/"+ self.output_loc +"/static/output_" + str(self.episode) + ".csv",
+            "--duration-log.statistics",
         ]
-        sumo_cmd.append("--")
         if self.begin_time > 0:
             sumo_cmd.append(f"-b {self.begin_time}")
         if self.sumo_seed == "random":
@@ -502,7 +502,9 @@ class SumoEnvironmentPZ(AECEnv, EzPickle):
 
     The arguments are the same as for :py:class:`sumo_rl.environment.env.SumoEnvironment`.
     """
+
     metadata = {"render.modes": ["human", "rgb_array"], "name": "sumo_rl_v0", "is_parallelizable": True}
+
     def __init__(self, **kwargs):
         """Initialize the environment."""
         EzPickle.__init__(self, **kwargs)

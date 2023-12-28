@@ -413,7 +413,9 @@ ul.mylist li, ol.mylist li {
 
 /* Set Sim --------------------------------------------------------------------------*/
 #target_cluster{
+    display: flex;
     position: relative;
+    flex-wrap: wrap;
     left: 5%;
     height: 70px;
     width: 90%;

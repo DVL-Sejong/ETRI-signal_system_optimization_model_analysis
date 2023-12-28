@@ -4,7 +4,7 @@ let schart;
 let lchart;
 let hischart;
 
-function draw(method) {
+function draw(spd, loss, tt, train_time) {
     
     if (lchartRen == 1) {
         tchart.destroy()
@@ -15,25 +15,35 @@ function draw(method) {
     }
 
     var step = []
-    for (var i = 1; i < 121; i++) {
+    for (var i = 1; i < 201; i++) {
         step.push(parseInt(i))
     }
-    let ac_loss = new Array(3).fill(null).map(() => []);
-    let ac_tt = new Array(3).fill(null).map(() => []);
-    let ac_spd = new Array(3).fill(null).map(() => []);
-    //d3.csv("static/data/" + method +"/cluster_data.csv")
-    d3.csv("static/data/4x4/cluster_data.csv")
+    
+    drawSpd(step, spd);
+    drawLoss(step, loss);
+    drawTravel(step, tt);
+    drawHist(train_time);
+    lchartRen = 1;
+    /*
+    let ac_loss = new Array(4).fill(null).map(() => []);
+    let ac_tt = new Array(4).fill(null).map(() => []);
+    let ac_spd = new Array(4).fill(null).map(() => []);
+    //d3.csv("static/data/" + network +"/cluster_data.csv")
+    d3.csv("static/data/" + network +"/cluster_data.csv")
         .then(function (data) {
             data.forEach(function(d) {
                 ac_loss[0].push(+d.loss)
-                ac_loss[1].push(+d.loss6)
-                ac_loss[2].push(+d.loss3)
+                ac_loss[1].push(+d.loss3)
+                ac_loss[2].push(+d.loss2)
+                ac_loss[3].push(+d.loss1)
                 ac_spd[0].push(+d.spd)
-                ac_spd[1].push(+d.spd6)
-                ac_spd[2].push(+d.spd3)
+                ac_spd[1].push(+d.spd3)
+                ac_spd[2].push(+d.spd2)
+                ac_spd[3].push(+d.spd1)
                 ac_tt[0].push(+d.tt)
-                ac_tt[1].push(+d.tt6)
-                ac_tt[2].push(+d.tt3)
+                ac_tt[1].push(+d.tt3)
+                ac_tt[2].push(+d.tt2)
+                ac_tt[3].push(+d.tt1)
             });
             drawSpd(step, ac_spd)
             drawLoss(step, ac_loss)
@@ -44,7 +54,7 @@ function draw(method) {
         .catch(function (error) {
             // Handle errors
             console.error("Error loading CSV file:", error);
-        });
+        });*/
 }
 // 차트 생성 함수
 /*
@@ -113,20 +123,16 @@ function createAreaChart(containerId, step, dataA, dataB) {
 function drawLoss(step, data) {
     let yaxisConfig = {
             type: 'numeric',
-            min: 0,
-            max: 350,
-            tickAmount: 7,
+            min: 50,
+            max: 450,
+            tickAmount: 10,
         };
 
     let series = data.map((row, i) => {
         var name;
-        if (i == 0){
-            name = 'All Signal'
-        } else if (i == 1) {
-            name = 'All cluster Signal'
-        } else{
-            name = 'One cluster Signal'
-        }
+
+        name = "experiments" + String(i)
+
         return {
             name: name,
             data: row.map((value, j) => {
@@ -154,9 +160,9 @@ function drawLoss(step, data) {
         },
         xaxis: {
             type: 'numeric',
-            tickAmount: 6, // 이 값을 조절하여 눈금의 갯수를 조절할 수 있습니다.
+            tickAmount: 5, // 이 값을 조절하여 눈금의 갯수를 조절할 수 있습니다.
             min: 0, // x축의 최소값
-            max: 120 // x축의 최대값, 여기서는 단순한 예시입니다.
+            max: 200 // x축의 최대값, 여기서는 단순한 예시입니다.
         },
         yaxis: yaxisConfig,
     }
@@ -167,20 +173,15 @@ function drawLoss(step, data) {
 function drawTravel(step, data) {
     let yaxisConfig = {
             type: 'numeric',
-            min: 200000,
-            max: 600000,
-            tickAmount: 5,
+            min: 0,
+            max: 2100000,
+            tickAmount: 10,
         };
 
     let series = data.map((row, i) => {
         var name;
-        if (i == 0){
-            name = 'All Signal'
-        } else if (i == 1) {
-            name = 'All cluster Signal'
-        } else{
-            name = 'One cluster Signal'
-        }
+
+        name = "experiments" + String(i)
         return {
             name: name,
             data: row.map((value, j) => {
@@ -208,9 +209,9 @@ function drawTravel(step, data) {
         },
         xaxis: {
             type: 'numeric',
-            tickAmount: 6, // 이 값을 조절하여 눈금의 갯수를 조절할 수 있습니다.
+            tickAmount: 5, // 이 값을 조절하여 눈금의 갯수를 조절할 수 있습니다.
             min: 0, // x축의 최소값
-            max: 120 // x축의 최대값, 여기서는 단순한 예시입니다.
+            max: 200 // x축의 최대값, 여기서는 단순한 예시입니다.
         },
         yaxis: yaxisConfig,
     }
@@ -221,20 +222,14 @@ function drawTravel(step, data) {
 function drawSpd(step, data) {
     let yaxisConfig = {
             type: 'numeric',
-            min: 5,
-            max: 10,
-            tickAmount: 5,
+            min: 4,
+            max: 12,
+            tickAmount: 9,
         };
 
     let series = data.map((row, i) => {
         var name;
-        if (i == 0){
-            name = 'All Signal'
-        } else if (i == 1) {
-            name = 'All cluster Signal'
-        } else{
-            name = 'One cluster Signal'
-        }
+        name = "experiments" + String(i)
         return {
             name: name,
             data: row.map((value, j) => {
@@ -262,9 +257,9 @@ function drawSpd(step, data) {
         },
         xaxis: {
             type: 'numeric',
-            tickAmount: 6, // 이 값을 조절하여 눈금의 갯수를 조절할 수 있습니다.
+            tickAmount: 5, // 이 값을 조절하여 눈금의 갯수를 조절할 수 있습니다.
             min: 0, // x축의 최소값
-            max: 120 // x축의 최대값, 여기서는 단순한 예시입니다.
+            max: 200 // x축의 최대값, 여기서는 단순한 예시입니다.
         },
         yaxis: yaxisConfig,
     }
@@ -272,27 +267,24 @@ function drawSpd(step, data) {
     schart.render()
 }
 
-function drawHist() {
+function drawHist(data) {
+
+    let series = data.map((row, i) => {
+        var name;
+
+        name = "experiments" + String(i)
+
+        return {
+            name: name,
+            data: [{
+                x: 'Running time',
+                y: [0, row]
+            }]
+        };
+    });
+
     var options = {
-        series: [{
-            name: 'All Signal',
-            data: [{
-                x: 'Running time',
-                y: [0, 6502],
-            }]
-        }, {
-            name: 'All Cluster',
-            data: [{
-                x: 'Running time',
-                y: [0, 3237],
-            }]
-        }, {
-            name: 'One Cluster Signal',
-            data: [{
-                x: 'Running time',
-                y: [0, 2123],
-            }]
-        }],
+        series: series,
         chart: {
             height: 200,
             width: 350,

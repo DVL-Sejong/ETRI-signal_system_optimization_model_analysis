@@ -3,15 +3,11 @@ import pandas as pd
 import sys, os
 from dimension_reduction import get_projection_value
 from shapely import get_shapely_value
+from simulation import get_simulation_output
 from flask import Flask
 from flask import Flask, request, abort
 from flask import render_template
 from flask import jsonify
-from sumo_rl import SumoEnvironment
-from sumo_rl.agents import QLAgent
-from sumo_rl.exploration import EpsilonGreedy
-from experiments.ql_4x4 import run_simulation
-import time
 
 if "SUMO_HOME" in os.environ:
     tools = os.path.join(os.environ["SUMO_HOME"], "tools")
@@ -59,13 +55,14 @@ def shapely_value():
     return jsonify({'shapely_value': svalue[0], 'feature_names': svalue[1]})
 
 
-'''@app.route('/data/simulation_output', methods=['POST'])
+@app.route('/data/simulation_output', methods=['POST'])
 def simulation_output():
     data = request.get_json()
 
-    target_list = data.get('sig_list')
-    output = [[0, 0],[],[],[]]
+    network = data.get('network')
+    target = data.get('target')
+    output_loc = data.get('output_loc')
     
-    result = run_simulation(target_list)
-    return jsonify(result)
-    #return jsonify({'train_time': output[0], 'speed': output[1], 'stopped': output[2], 'waiting':output[3]})'''
+    spd, loss, tt, run_time = get_simulation_output(network, target, output_loc)
+
+    return jsonify({'spd': spd, 'loss': loss, 'tt': tt, 'time':run_time})

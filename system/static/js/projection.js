@@ -24,6 +24,7 @@ function setButtonClickHandler() {
     if (document.getElementById('data').querySelector("select").value == 'gangnam') {
         ysize = 2;
     }
+    
     for (let i = 0; i < nodeElements.length; i++) {
         for (let j = 0; j < gInsidePolygonList.length; j++) {
             if (gInsidePolygonList[j].includes(String(i))) {
@@ -42,6 +43,27 @@ function setButtonClickHandler() {
             }
         }
     }
+    addTargetCluster(gInsidePolygonList.length)
+    
+}
+
+function addTargetCluster(len) {
+    const select = document.getElementById('target_cluster');
+    const selectedOption = 'Cluster ' + String(len)
+
+    const optionsContainer = document.getElementById('target_cluster');
+    const optionDiv = document.createElement('div');
+    optionDiv.className = 'selected'
+    optionDiv.textContent = selectedOption;
+    const removeBtn = document.createElement('button');
+    optionDiv.style.borderColor = get_color(len-1);
+    removeBtn.textContent = 'X';
+    removeBtn.className = 'rbtn';
+    removeBtn.onclick = function() {
+        optionsContainer.removeChild(optionDiv);
+    };
+    optionDiv.appendChild(removeBtn);
+    optionsContainer.appendChild(optionDiv);
 }
 
 function resetButtonClickHandler() {
